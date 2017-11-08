@@ -147,37 +147,45 @@ This table describes all of the key/value pairs used in the testnet.json file.
 
 |Value    | Description
 |:------------- | :-----------
-|ssh_helper | a set of values used to facilitate the use of SSH and SCP
-nodes | a collection of descriptors defining the eosd instances used to assemble this testnet. The names used as keys in this collection are also aliases used within as placeholders for peer nodes.
+|ssh_helper | набор значений, используемых для облегчения использования SSH и SCP
+nodes | набор дескрипторов, определяющих экземпляры eosd, используемые для сборки этой тестовой сети. Имена, используемые в качестве ключей в этой коллекции, также являются псевдонимами, которые используются в качестве заполнителей для одноранговых нод.
+
 
 |ssh_helper elements | Description
 |:---------- | :------------
-ssh_cmd | path to the local ssh command
-scp_cmd | path to the local scp command
-ssh_args | any additional command line arguments needed to successfully connect to remote peers
-ssh_identity | The user name to use when accessing the remote hosts
+ssh_cmd | путь к локальной команде ssh
+scp_cmd | путь к локальной команде scp
+ssh_args | любые дополнительные аргументы командной строки, необходимые для успешного подключения к удаленным одноранговым серверам
+ssh_identity | Имя пользователя, которое будет использоваться при доступе к удаленным хостам
 
 |per-node elements | Description
 |:-------- | :----------
-genesis | path to the genesis.json file. This should be the same file for all members of the testnet.
-remote | specifies whether this node is in the local network or not. This flag ties in with the launch mode command line option (-l) to determine if the local launcher instance will attempt to start this node.
-ssh_identity | a per-node override of the general ssh_identity defined above.
-ssh_args | a per-node override of the general ssh_args
-eos_root_dir | specifies the directory into which all eosd artifacts are based. This is required for any hosts that are not the local host.
-data_dir | the root for the remaining node-specific settings below.
-hostname | the domain name for the server, or its IP address.
-public_name | possibly different from the hostname, this name will get substituted for the aliases when creating the per-node config.ini file's peer list.
-p2p_port | combined with the public name to identify the endpoint listed on for peer connections. When multiple nodes share a host, the p2p_port is automatically incremented for each node.
-http_port | defines the listen endpoint for the client API services
-filesize | sets the capacity in megabytes for the size of the blockchain backing store file. 
-keys | specify the authentication tokens for this node.
-peers | this list indicates the other nodes in the network to which this one actively connects. Since this file may be edited to alter the hostname, public name, or p2p port values, the peers list here holds aliases for the actual endpoints eventually written to the individual config.ini files.
-producers | this list identifies which of the producers from the genesis.json file are held by this node. Note that the launcher uses a round-robin algorithm to spread the producer instances across the producing nodes.
+genesis | путь к genesis.json файлу. Это должен быть тот же файл для всех членов тестовой сети.
+remote | указывает, находится ли этот узел в локальной сети или нет. This flag ties in with the launch mode command line option (-l) to determine if the local launcher instance will attempt to start this node.Этот флаг связан с параметром командной строки режима запуска (-l), чтобы определить, попытается ли экземпляр локальный launcher запустить этот узел.
 
-###Provisioning Distributed Servers
-The ssh_helper section of the testnet.json file contains the ssh elements necessary to connect and issue commands to other servers. In addition to the ssh_helper section which provides access to global configuration settings, the per-node configuration may provide overriding identity and connection arguments.
+ssh_identity | переопределение по каждому узлу общего ssh_identity, определенного выше.
+ssh_args | переопределение узлов для общих ssh_args
+eos_root_dir | определяет каталог, в котором основаны все артефакты eosd. Это необходимо для любых хостов, которые не являются локальным хостом.
+data_dir | root для остальных параметров, определенных узлом ниже.
+hostname | имя домена для сервера или его IP-адрес.
+public_name | возможно, отличается от имени хоста, это имя будет заменено псевдонимами при создании однорангового списка файлов config.ini.
 
-It is also necessary to provision the server by at least copying the eosd executable, and the genesis.json files to their appropriate locations relative to some named EOS root directory. For example, I defined the EOS root to be `/home/phil/blockchain/eos`. When run, the launcher will run through a variety of shell commands using ssh and finally using scp to copy a config.ini file to the appropriate data directory on the remote.
+p2p_port | в сочетании с открытым именем, чтобы определить конечную точку, указанную для одноранговых соединений. Когда несколько узлов совместно используют хост, p2p_port автоматически увеличивается для каждого узла.
+http_port | определяет конечную точку прослушивания для клиентских API-сервисов
+filesize | устанавливает емкость в мегабайтах для размера blockchain backing store файла. 
+keys | указивает токены аутентификации для этого узла.
+peers | этот список указывает другие узлы в сети, к которым он активно подключается. Поскольку этот файл может быть изменен для изменения значений имени хоста, открытого имени или порта p2p, список одноранговых узлов здесь содержит псевдонимы для фактических конечных точек, которые в конечном итоге записываются в отдельные файлы config.ini.
+producers | этот список определяет, какой из производителей из файла genesis.json принадлежит этой ноде. Обратите внимание, что launcher использует алгоритм round-robin для распространения экземпляров производителя через производящие ноды.
+
+
+###Предоставление распределенных серверов
+
+Секция ssh_helper файла testnet.json содержит элементы ssh, необходимые для подключения и выдачи команд другим серверам.
+ В дополнение к разделу ssh_helper, который обеспечивает доступ к глобальным настройкам конфигурации, конфигурация каждой ноды может обеспечивать переопределение аргументов идентификации и подключения.
+
+Также необходимо предоставить серверу, по крайней мере, скопировать исполняемый файл eosd и файлы genesis.json в соответствующие места относительно некоторого имени корневого каталога EOS.
+Например, я определил корень EOS `/home/phil/blockchain/eos`.При запуске launcher запускает множество команд оболочки с помощью ssh и, наконец, используя scp для копирования файла config.ini в соответствующий каталог данных на удаленном компьютере.
+
 
 ## Runtime Artifacts
 The launcher app creates a separate date and configuration directory for each node instance. This directory is named `tn_data_<n>` with n ranging from 0 to the number of nodes being launched. 
