@@ -1,18 +1,18 @@
 [toc]
 
 #EOS Testnet
-To date, all work done to experiment with the EOS blockchain has been performed using a single instance of eosd hosting all 21 block producers. While this is a perfectly valid solution for validating features of the blockchain, developing new contracts, or whatever, it does not scale. Nor does it expose the sort of issues raised when contract and block data must be shared across multiple instances. Providing the ability to scale involves deploying multiple eosd nodes across many hosts and lining then into a peer-to-peer (p2p) network. Composing this network involves tailoring and distributing configuration files, coordinating starts and stops and other tasks.
+  На сегодняшний день вся работа, выполненная для экспериментов с блочной цепью EOS, была выполнена с использованием одного экземпляра eosd-хостинга для всех 21 производителя блоков. Хотя это совершенно правильное решение для проверки функций блочной цепи, разработки новых контрактов и т.д.,но оно не масштабируется. Он также не раскрывает проблемы, возникающие в связи с тем, что данные контрактов и блоков должны делиться между несколькими экземплярами. Предоставление возможности масштабирования предполагает развертывание нескольких узлов eosd для многих хостов и выравнивание в одноранговой сети (p2p). Составление этой сети включает в себя настройку и распространение конфигурационных файлов, координацию запусков и остановок и другие задачи.
 
-Doing this manually is a tedious task and easily error prone. Fortunately a solution is provided, in the form of the Launcher application, described below.
+Выполнение этого вручную - утомительная задача и легко подверженная ошибкам. К счастью, решение предоставляется в виде приложения Launcher, описанного ниже.
 
 ## Testnet nodes, networks, and topology
-Before getting into the details of the EOS testnet, lets clarify some terms. In this document I use the terms "host" and "machine" fairly interchangeably. A host generally boils down to a single IP address, although in practice it could have more.
+Прежде чем войти в подробности тестовой системы EOS, давайте проясним некоторые термины. В этом документе я использую термины «хост» и «машина» довольно взаимозаменяемо. Хост обычно сводится к одному IP-адресу, хотя на практике он может иметь больше.
 
-The next term is "node." A node is an instance of the eosd executable configured to serve as 0 or more producers. There is not a one-to-one mapping between nodes and hosts, a host may serve more than one node, but one node cannot span more than one host. 
+Следующий термин - «узел». Узел представляет собой экземпляр исполняемого файла eosd, сконфигурированный для работы в качестве 0 или более производителей.Между нодами и хостами нет взаимно однозначного сопоставления(one-to-one), хост может обслуживать более одной ноды, но одина нода не может охватывать более одного хоста.
 
-I use "local network" to refer to any group of nodes, whether on a single host or several, are all close in that access does not have to leave a secure network environment. 
+Я использую «локальную сеть» для общения с любой группой узлов, будь то на одном хосте или нескольких, все закрыты тем, что доступ не должен покидать защищенную сетевую среду.
 
-Finally there is the idea of distributed networks that involve remote hosts. These may be hosts on which you may not have direct access for starting and stopping eosd instances, but with whom you may wish to collaborate for setting up a decentralized testnet.
+Наконец, есть идея распределенных сетей, которые включают удаленные хосты.Это могут быть хосты, на которых у вас может не быть прямого доступа для запуска и остановки экземпляров eosd, но с которыми вы можете сотрудничать для настройки децентрализованной тестовой сети.
 
 ### Localhost networks
 Running a testnet on a single machine is the quickest way to get started. As you will see below, this is the default mode for the Launcher application. You can set up a localhost network immediately by simply telling the launcher how many producing or non-producing nodes to activate, and perhaps what type of network topology to use.
@@ -201,3 +201,5 @@ A file called "last_run.json" contains hints for a later instance of the launche
 Functionality that remains to be implemented: caching signed transactions then purging them on a schedule. Sending summaries of blocks rather than whole blocks. Optimizing the routing between nodes. Failover during new node synchronization if a peer fails to respond timely enough
 
 Also need to prepare tests that are distributed, deterministic, and repeatable.
+
+SOURCE [https://github.com/EOSIO/eos/blob/master/testnet.md]
