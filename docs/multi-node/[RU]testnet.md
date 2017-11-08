@@ -186,23 +186,23 @@ producers | этот список определяет, какой из прои
 
 
 ## Runtime Artifacts
-The launcher app creates a separate date and configuration directory for each node instance. This directory is named `tn_data_<n>` with n ranging from 0 to the number of nodes being launched. 
+The launcher app creates a separate date and configuration directory for each node instance.Приложение launcher создает отдельный каталог даты и конфигурации для каждого экземпляра ноды. Этот каталог называется `tn_data_<n>` с n от 0 до количества запущенных узлов. 
 
 | Per-Node File | Description
 | :------------ | :----------
-| config.ini  | The eosd configuration file.
-| eosd.pid | The process ID of the running eosd instance.
+| config.ini  | Файл конфигурации eosd.
+| eosd.pid | ID процесса запущенного экземпляра eosd.
 | blockchain/* | The blockchain backing store
 | blocks/* | The blockchain log store
-| stderr.txt | The cerr output from eosd.
-| stdout.txt | The cout output from eosd.
+| stderr.txt | cerr вывод из eosd.
+| stdout.txt | cout вывод из eosd.
 
-A file called "last_run.json" contains hints for a later instance of the launcher to be able to kill local and remote nodes when run with -k. 
+Файл "last_run.json" содержит подсказки для более позднего экземпляра launcher, чтобы иметь возможность убивать локальные и удаленные ноды когда запускаешь с -k. 
 
 #What Remains To Be Done
 
-Functionality that remains to be implemented: caching signed transactions then purging them on a schedule. Sending summaries of blocks rather than whole blocks. Optimizing the routing between nodes. Failover during new node synchronization if a peer fails to respond timely enough
+Функциональность, которая еще предстоит реализовать: кэширование подписанных транзакций, а затем очистка их по расписанию. Отправка резюме блоков, а не целых блоков.Оптимизация маршрутизации между узлами. Отказоустойчивость при синхронизации нового узла, если одноранговый узел не может ответить достаточно своевременно
 
-Also need to prepare tests that are distributed, deterministic, and repeatable.
+Также необходимо подготовить тесты, которые распределены, детерминированы и повторяемы.
 
 SOURCE [https://github.com/EOSIO/eos/blob/master/testnet.md]
