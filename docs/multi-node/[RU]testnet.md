@@ -15,18 +15,18 @@
 Наконец, есть идея распределенных сетей, которые включают удаленные хосты.Это могут быть хосты, на которых у вас может не быть прямого доступа для запуска и остановки экземпляров eosd, но с которыми вы можете сотрудничать для настройки децентрализованной тестовой сети.
 
 ### Localhost networks
-Running a testnet on a single machine is the quickest way to get started. As you will see below, this is the default mode for the Launcher application. You can set up a localhost network immediately by simply telling the launcher how many producing or non-producing nodes to activate, and perhaps what type of network topology to use.
+Запуск тестовой сети на одной машине - это самый быстрый способ начать работу.Как вы увидите ниже, это режим по умолчанию для приложения Launcher.Вы можете сразу настроить локальную сеть, просто сообщив запускающему о том, сколько producing или non-producing нод активировать, и, возможно, какой тип топологии сети использовать.
 
-The downside is that you need a lot of hardware when running many nodes on a single host. Also the multiple nodes will contend with each other in terms of CPU cycles, limiting true concurrency, and also localhost network performance is much different from inter-host performance, even with very high speed lans.
+Недостатком является то, что вам нужно много оборудования при запуске многих узлов на одном хосте. Кроме того, множественные узлы будут соперничать друг с другом с точки зрения циклов процессора, ограничивая истинную параллельность, а также производительность сети localhost сильно отличаются от производительности между хостами, даже с очень высокими скоростями.
 
 ### Distributed networks
-The most representative model of the live net is to spread the eosd nodes across many hosts. The Launcher app is able to start distributed nodes by the use of bash scripts pushed through ssh. In this case additional configuration is required to replace configured references to "localhost" or "127.0.0.1" with the actual host name or ip addresses of the various peer machines.
+Наиболее представительной моделью живой сети является распространение узлов eosd на многих хостах. Приложение Launcher может запускать распределенные узлы с помощью скриптов bash, пропущенных через ssh. В этом случае требуется дополнительная конфигурация для замены сконфигурированных ссылок на «localhost» или «127.0.0.1» на фактическое имя хоста или IP-адреса различных одноранговых машин.
 
-Launching a distributed testnet requires the operator to have ssh access to all the remote machines configured to authenticate without the need for a user entered password. This configuration is described in detail below. 
+Запуск распределенной тестовой сети требует, чтобы оператор имел доступ к SSH для всех удаленных компьютеров, настроенных для аутентификации, без необходимости вводить пароль пользователя.Эта конфигурация подробно описана ниже.
 
-In cases where a testnet spans multiple remote networks, a common launcher defined configuration file may be shared externally between distributed operators, each being responsible for launching his or her own local network.
+В тех случаях, когда тестовая сеть охватывает несколько удаленных сетей, общий распределенный конфигурационный файл с открытым launcher может совместно использоваться между распределенными операторами, каждый из которых несет ответственность за запуск своей собственной локальной сети.
 
-Note that the Launcher will not push instances of eosd to the remote hosts, you must prepare the various test network hosts separately.
+Обратите внимание, что Launcher не будет передавать экземпляры eosd на удаленные хосты, вы должны подготовить различные тестовые сетевые узлы отдельно.
 
 ### Network Topology
 Network topology or "shape" describes how the nodes are connected in order to share transaction and block data, and requests for the same. The idea for varying network topology is that there is a trade off between the number of times a node must send a message reporting a new transaction or block, vs the number of times that message must be repeated to ensure all nodes know of it.
