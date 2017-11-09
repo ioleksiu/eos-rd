@@ -29,37 +29,36 @@
 Обратите внимание, что Launcher не будет передавать экземпляры eosd на удаленные хосты, вы должны подготовить различные тестовые сетевые узлы отдельно.
 
 ### Network Topology
-Network topology or "shape" describes how the nodes are connected in order to share transaction and block data, and requests for the same. The idea for varying network topology is that there is a trade off between the number of times a node must send a message reporting a new transaction or block, vs the number of times that message must be repeated to ensure all nodes know of it.
+Топология сети или «Кольцо» описывает, как узлы подключены для обмена транзакциями и блоками данных, а также запросы на то же самое.Идея для различной топологии сети заключается в том, что между количеством раз, когда узел должен отправлять сообщение, сообщающее о новой транзакции или блоке, существует компромисс между количеством раз, когда это сообщение должно повторяться, чтобы все узлы знали об этом.
 
-The Launcher has definitions of three different network "shapes" based on inter-nodal connections, which can be selected by a command line option, or you can supply your own network topology by editing the Launcher generated configuration file.
+Launcher имеет определения трех разных «форм» сети на основе междоменных соединений, которые могут быть выбраны с помощью опции командной строки или вы можете предоставить свою собственную топологию сети, отредактировав файл конфигурации, созданный Launcher.
 
-####Ring network
+####Ring network | Сеть «Кольцо»
 ![](ring.png  "Ring Diagram")
-This is the simplest network, where each node identifies just the node next to it as it's only peer. 
+Это простейшая сеть, где каждый узел идентифицирует только узел рядом с ним, поскольку он только одноранговый.
 
-####Star network
+####Star network | Сеть «Звезда»
 ![](star.png "Star Diagram")
-A "star" is intended to support a larger number of nodes in the testnet. In this case the number of peers connected to a node and the distribution of those nodes varies based on the number of nodes in the network.
+«Звезда» предназначена для поддержки большего количества узлов в тестовой сети. В этом случае количество одноранговых узлов, подключенных к узлу, и распределение этих узлов изменяется в зависимости от количества узлов в сети.
 
-####Mesh network
+####Mesh network | Сеть «Сетка»
 ![](mesh.png "Mesh Diagram")
-In a "mesh" network, each node is connected to as many peer nodes as possible.
+В сети «сетка» каждый узел подключается к максимально возможному числу узлов
 
 #The Launcher Application
-To address the complexity implied by distributing multiple eosd nodes across a LAN or a wider network, the launcher application was created. 
+Чтобы решить сложность, связанную с распределением нескольких узлов eosd через локальную сеть или более широкую сеть, было создано Launcher.
 
-Based on a handful of command line arguments the Launcher is able to compose per-node configuration files, distribute these files securely amongst the peer hosts, then start up the multiple instances of eosd.
+Основываясь на нескольких аргументах командной строки, Launcher может составлять конфигурационные файлы для каждого узла, надежно распределять эти файлы среди одноранговых узлов, а затем запускать несколько экземпляров eosd.
 
-Eosd instances started this way have their output logged in individual text files. Finally the launcher application is also able to shut down some or all of the test network. 
+Экземпляры Eosd запускались таким образом, чтобы их выходные данные регистрировались в отдельных текстовых файлах. Наконец, приложение запуска также может отключать некоторые или все тестовые сети.
 
 ##Running the Launcher application
 
-The launcher program is used to configure and deploy producing and non-producing eosd nodes that talk to each other using configured routes. The configuration for each node is stored in separate directories, permitting multiple nodes to be active on the same host, assuming the machine has sufficient memory and disk space for multiple eosd instances. The launcher makes use of multiple configuration sources in order to deploy a testnet. A handful of command line arguments can be used to set up simple local networks. 
+Программа запуска используется для настройки и развертывания создающих и не создающих eosd узлов, которые общаются друг с другом с помощью настроенных маршрутов.  Конфигурация для каждого узла хранится в отдельных каталогах, позволяя нескольким узлам быть активными на одном и том же хосте, предполагая, что на компьютере достаточно памяти и дискового пространства для нескольких экземпляров eosd. Launcher использует несколько источников конфигурации для развертывания тестовой сети. Несколько аргументов командной строки можно использовать для настройки простых локальных сетей.
 
-To support deploying distributed networks, the launcher will read more detailed configuration from a JSON file. You can use the launcher to create a default JSON file based on the command line options you supply. Edit that file to substitute actual hostnames and other details 
-as needed, then rerun the launcher supplying this file.
+Чтобы поддерживать развертывание распределенных сетей, launcher будет читать более подробную конфигурацию из файла JSON. Вы можете использовать launcher для создания файла JSON по умолчанию на основе параметров командной строки, которые вы предоставляете. Отредактируйте этот файл, чтобы заменить фактические имена хостов и другие данные по мере необходимости, а затем запустите launcher, поставляя этот файл.
 
-For the moment the launcher only activates platform-native nodes, dockerized nodes will be added later. It should be straight forward to use the generated configuration files with dockerized nodes.
+На данный момент launcher активирует только узлы платформы, dockerized ноды  будут добавлены позже. Необходимо использовать сгенерированные файлы конфигурации с dockerized нодами.
 
 ## Launcher command line arguments
 Вот текущий список аргументов командной строки, распознаваемых программой launcher.
