@@ -205,3 +205,38 @@ The launcher app creates a separate date and configuration directory for each no
 Также необходимо подготовить тесты, которые распределены, детерминированы и повторяемы.
 
 SOURCE [https://github.com/EOSIO/eos/blob/master/testnet.md]
+
+## Running multi-node local testnet 
+
+Для запуска локальной тестовой сети вы можете использовать
+ `launcher` приложение предоставленое в `~/eos/build/programs/launcher` папке.
+
+В целях тестирования вы будете запускать 2 локальных производственных узла, которые будут держать связь друг с другом.
+
+```bash
+cd ~/eos/build
+cp ../genesis.json ./
+./programs/launcher/launcher -p2 --skip-signature
+```
+
+Эта команда будет генерировать 2 папки данных для каждого экземпляра узла: `tn_data_0` и `tn_data_1`.
+
+Вы должны увидеть следующий ответ:
+
+```bash
+adding hostname ip-XXX-XXX-XXX
+found interface 127.0.0.1
+found interface XXX.XX.XX.XX
+spawning child, programs/eosd/eosd --skip-transaction-signatures --data-dir tn_data_0
+spawning child, programs/eosd/eosd --skip-transaction-signatures --data-dir tn_data_1
+```
+
+Чтобы подтвердить, что узлы запущены, выполните следующие действия `eosc`:
+```bash
+~/eos/build/programs/eosc
+./eosc -p 8888 get info
+./eosc -p 8889 get info
+```
+
+Для каждого вы должны получить json с информацией о блокчейне.
+SOURCE [https://github.com/EOSIO/eos/blob/master/README.md#localtestnet]
